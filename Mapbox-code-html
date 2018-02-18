@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Modulació map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGFtaWVuYXp6b3BhcmRpIiwiYSI6ImNqYnRrMWhodjFjZnMzMnJua2k3ejYydzgifQ.2NNIqf3tpKLvYmljHQLf2w';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/damienazzopardi/cjde6g7tpea1g2rpn6j5tmxtd', // stylesheet location
+    center: [2.1734, 41.3851], // starting position [lng, lat]
+    zoom: 12.3 // starting zoom
+});
+
+// Add geolocate control to the map.
+map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+}));
+    
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+    
+</script>
+
+</body>
+</html>
