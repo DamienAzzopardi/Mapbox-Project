@@ -27,7 +27,7 @@
     }
 
     .mapboxgl-popup {
-      color: #EEEEEE;
+      color: #CCCCCC;
       font-family: 'brandon-grotesque';
     }
 
@@ -63,6 +63,29 @@
     
     .mapboxgl-popup .mapboxgl-popup-content {
       background-color: #222222;
+      padding: 20px;
+    }
+
+    .mapboxgl-popup .mapboxgl-popup-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .mapboxgl-popup .mapboxgl-popup-content h3 {
+      color: #FFFFFF;
+      margin: 0;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    .mapboxgl-popup .mapboxgl-popup-content h4 {
+      text-transform: uppercase;
+      font-weight: 400;
+      letter-spacing: 2px;
+      font-size: 10px;
+      color: #FFFFFF;
+      margin: 20px 0 0 0;
     }
 
     @media screen and (max-width: 375px) {
