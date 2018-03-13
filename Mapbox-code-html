@@ -26,6 +26,45 @@
       padding-bottom: 0;
     }
 
+    .mapboxgl-popup {
+      color: #EEEEEE;
+      font-family: 'brandon-grotesque';
+    }
+
+    .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+      border-bottom-color: #222222;
+    }
+    .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {
+      border-bottom-color: #222222;
+    }
+    .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+      border-bottom-color: #222222;
+    }
+    .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+      border-top-color: #222222;
+    }
+    .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {
+      border-top-color: #222222;
+    }
+    .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+      border-top-color: #222222;
+    }
+    .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+      border-right-color: #222222;
+    }
+    .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+      border-left-color: #222222;
+    }
+
+    .mapboxgl-popup .mapboxgl-popup-close-button {
+      color: #EEEEEE;
+      outline: none;
+    }
+    
+    .mapboxgl-popup .mapboxgl-popup-content {
+      background-color: #222222;
+    }
+
     @media screen and (max-width: 375px) {
       #map-outer {
         padding-bottom: 130%;
@@ -56,6 +95,67 @@
         
     // Add zoom and rotation controls to the map.
     map.addControl(new mapboxgl.NavigationControl());
+
+
+  var getPopupHtmlContent = function(data) {
+    var html = `<h3>${data.Name}</h3>`;
+    
+    // Base info
+    var propertiesNames = Object.keys(data);
+    var regexBase = new RegExp('^Base_', 'i');
+    var regexContact = new RegExp('^C_', 'i');
+    var hasContactProperties = false;
+  
+    var ulBase = '<ul>';
+    var ulContact = '<ul>';
+
+    for(var i = 0; i < propertiesNames.length; i++) {
+      if(regexBase.test(propertiesNames[i])) {
+        ulBase += `<li>${data[propertiesNames[i]]}</li>`;
+      }
+
+      if(regexContact.test(propertiesNames[i])) {
+        var contactType = propertiesNames[i].split('C_')[1];
+        ulContact += `<li><a href="${data[propertiesNames[i]]}">${contactType}</a></li>`;
+        hasContactProperties = true;
+      }
+    }
+
+    ulBase += '</ul>';
+    ulContact += '</ul>';
+
+    html += ulBase;
+
+    if(hasContactProperties) {
+      html += '<h4>Contact</h4>';
+      html += ulContact;
+    }
+
+    return html;
+  }
+
+  /* 
+  	Interactivity stuff
+   */
+  var handleClick = function(e)  {
+    var features = map.queryRenderedFeatures(e.point, {
+      layers: ['modulacio-mapbox-dataset-februar']
+    });
+    if (!features.length) {
+      return;
+    }
+    var feature = features[0];
+
+    var popup = new mapboxgl.Popup({
+        offset: [0, -15]
+      })
+      .setLngLat(feature.geometry.coordinates)
+      .setHTML(getPopupHtmlContent(feature.properties))
+      .setLngLat(feature.geometry.coordinates)
+      .addTo(map);
+  };
+  map.on('click', handleClick);
+
   </script>
 </body>
 </html>
