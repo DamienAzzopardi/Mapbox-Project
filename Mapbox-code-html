@@ -31,27 +31,40 @@
       font-family: 'brandon-grotesque';
     }
 
+    .mapboxgl-popup-anchor-top,
+    .mapboxgl-popup-anchor-top-left,
+    .mapboxgl-popup-anchor-top-right {
+      margin-top: 30px;
+    }
+
     .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
       border-bottom-color: #222222;
     }
+
     .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {
       border-bottom-color: #222222;
     }
+    
     .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
       border-bottom-color: #222222;
     }
+
     .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
       border-top-color: #222222;
     }
+
     .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {
       border-top-color: #222222;
     }
+
     .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
       border-top-color: #222222;
     }
+
     .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
       border-right-color: #222222;
     }
+
     .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
       border-left-color: #222222;
     }
@@ -100,6 +113,10 @@
       <div id="map-inner"></div>
   </div>
   <script>
+    Array.prototype.move = function(from, to) {
+      this.splice(to, 0, this.splice(from, 1)[0]);
+    };
+
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGFtaWVuYXp6b3BhcmRpIiwiYSI6ImNqYnRrMWhodjFjZnMzMnJua2k3ejYydzgifQ.2NNIqf3tpKLvYmljHQLf2w';
     var map = new mapboxgl.Map({
       container: 'map-inner', // container id
@@ -131,6 +148,10 @@
   
     var ulBase = '<ul>';
     var ulContact = '<ul>';
+
+    // Reorder properties
+    var typeIndex = propertiesNames.indexOf('Type');
+    propertiesNames.move(typeIndex, 0);
 
     for(var i = 0; i < propertiesNames.length; i++) {
       if(regexBase.test(propertiesNames[i])) {
