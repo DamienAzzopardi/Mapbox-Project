@@ -128,7 +128,7 @@
     // Add geolocate control to the map.
     map.addControl(new mapboxgl.GeolocateControl({
       positionOptions: {
-          enableHighAccuracy: true
+        enableHighAccuracy: true
       },
       trackUserLocation: true
     }));
@@ -137,68 +137,68 @@
     map.addControl(new mapboxgl.NavigationControl());
 
 
-  var getPopupHtmlContent = function(data) {
-    var html = `<h3>${data.Name}</h3>`;
+    var getPopupHtmlContent = function(data) {
+      var html = `<h3>${data.Name}</h3>`;
+      
+      // Base info
+      var propertiesNames = Object.keys(data);
+      var regexBase = new RegExp('^Base_', 'i');
+      var regexContact = new RegExp('^C_', 'i');
+      var hasContactProperties = false;
     
-    // Base info
-    var propertiesNames = Object.keys(data);
-    var regexBase = new RegExp('^Base_', 'i');
-    var regexContact = new RegExp('^C_', 'i');
-    var hasContactProperties = false;
-  
-    var ulBase = '<ul>';
-    var ulContact = '<ul>';
+      var ulBase = '<ul>';
+      var ulContact = '<ul>';
 
-    // Reorder properties
-    var typeIndex = propertiesNames.indexOf('Type');
-    propertiesNames.move(typeIndex, 0);
+      // Reorder properties
+      var typeIndex = propertiesNames.indexOf('Base_Type');
+      propertiesNames.move(typeIndex, 0);
 
-    for(var i = 0; i < propertiesNames.length; i++) {
-      if(regexBase.test(propertiesNames[i])) {
-        ulBase += `<li>${data[propertiesNames[i]]}</li>`;
+      for(var i = 0; i < propertiesNames.length; i++) {
+        if(regexBase.test(propertiesNames[i])) {
+          ulBase += `<li>${data[propertiesNames[i]]}</li>`;
+        }
+
+        if(regexContact.test(propertiesNames[i])) {
+          var contactType = propertiesNames[i].split('C_')[1];
+          ulContact += `<li><a href="${data[propertiesNames[i]]}">${contactType}</a></li>`;
+          hasContactProperties = true;
+        }
       }
 
-      if(regexContact.test(propertiesNames[i])) {
-        var contactType = propertiesNames[i].split('C_')[1];
-        ulContact += `<li><a href="${data[propertiesNames[i]]}">${contactType}</a></li>`;
-        hasContactProperties = true;
+      ulBase += '</ul>';
+      ulContact += '</ul>';
+
+      html += ulBase;
+
+      if(hasContactProperties) {
+        html += '<h4>Contact</h4>';
+        html += ulContact;
       }
+
+      return html;
     }
 
-    ulBase += '</ul>';
-    ulContact += '</ul>';
+    /* 
+      Interactivity stuff
+    */
+    var handleClick = function(e)  {
+      var features = map.queryRenderedFeatures(e.point, {
+        layers: ['modulacio-mapbox-dataset-februar']
+      });
+      if (!features.length) {
+        return;
+      }
+      var feature = features[0];
 
-    html += ulBase;
-
-    if(hasContactProperties) {
-      html += '<h4>Contact</h4>';
-      html += ulContact;
-    }
-
-    return html;
-  }
-
-  /* 
-  	Interactivity stuff
-   */
-  var handleClick = function(e)  {
-    var features = map.queryRenderedFeatures(e.point, {
-      layers: ['modulacio-mapbox-dataset-februar']
-    });
-    if (!features.length) {
-      return;
-    }
-    var feature = features[0];
-
-    var popup = new mapboxgl.Popup({
-        offset: [0, -15]
-      })
-      .setLngLat(feature.geometry.coordinates)
-      .setHTML(getPopupHtmlContent(feature.properties))
-      .setLngLat(feature.geometry.coordinates)
-      .addTo(map);
-  };
-  map.on('click', handleClick);
+      var popup = new mapboxgl.Popup({
+          offset: [0, -15]
+        })
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML(getPopupHtmlContent(feature.properties))
+        .setLngLat(feature.geometry.coordinates)
+        .addTo(map);
+    };
+    map.on('click', handleClick);
 
   </script>
 </body>
