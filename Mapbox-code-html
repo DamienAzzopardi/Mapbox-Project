@@ -135,6 +135,16 @@
         
     // Add zoom and rotation controls to the map.
     map.addControl(new mapboxgl.NavigationControl());
+    
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('mouseenter', 'modulacio-mapbox-dataset-februar', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'modulacio-mapbox-dataset-februar', function () {
+        map.getCanvas().style.cursor = '';
+    });
 
 
     var getPopupHtmlContent = function(data) {
@@ -160,7 +170,7 @@
 
         if(regexContact.test(propertiesNames[i])) {
           var contactType = propertiesNames[i].split('C_')[1];
-          ulContact += `<li><a href="${data[propertiesNames[i]]}">${contactType}</a></li>`;
+          ulContact += `<li><a target="_blank" href="${data[propertiesNames[i]]}">${contactType}</a></li>`;
           hasContactProperties = true;
         }
       }
