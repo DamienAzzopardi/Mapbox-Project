@@ -89,14 +89,16 @@
       color: #FFFFFF;
       margin: 0;
       margin-bottom: 10px;
-      font-size: 12px;
+      font-size: 14px;
+      font-weight:550;
+      letter-spacing: 2.5px;
     }
 
     .mapboxgl-popup .mapboxgl-popup-content h4 {
       text-transform: uppercase;
-      font-weight: 400;
+      font-weight: 550;
       letter-spacing: 2px;
-      font-size: 10px;
+      font-size: 12px;
       color: #FFFFFF;
       margin: 20px 0 0 0;
     }
@@ -120,9 +122,9 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGFtaWVuYXp6b3BhcmRpIiwiYSI6ImNqYnRrMWhodjFjZnMzMnJua2k3ejYydzgifQ.2NNIqf3tpKLvYmljHQLf2w';
     var map = new mapboxgl.Map({
       container: 'map-inner', // container id
-      style: 'mapbox://styles/damienazzopardi/cjde6g7tpea1g2rpn6j5tmxtd', // stylesheet location
+      style: 'mapbox://styles/damienazzopardi/cjevaqh0p0r0r2sobfnuearra', // stylesheet location
       center: [2.1734, 41.3851], // starting position [lng, lat]
-      zoom: 10 // starting zoom
+      zoom: 12 // starting zoom
     });
 
     // Add geolocate control to the map.
