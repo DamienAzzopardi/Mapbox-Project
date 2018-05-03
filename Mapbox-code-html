@@ -13,7 +13,7 @@
     }
     #map-outer {
       position: relative;
-      width:100%;
+      width: 100%;
       padding-bottom: 56.25%;
     }
     #map-inner {
@@ -117,7 +117,7 @@
       margin: 20px 0 0 0;
     }
 
-    @media screen and (max-width: 375px) {
+    @media screen and (max-width: 450px) {
       #map-outer {
         padding-bottom: 130%;
       }
